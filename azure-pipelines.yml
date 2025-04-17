@@ -11,9 +11,17 @@ stages:
   - job: BuildFrontendApp
     displayName: Build Frontend App
     steps:
-    - script: echo building froentend App
+    - script: echo building frontend App
       displayName: build frontend app
     - script: echo running unit tests for frontend app
       displayName: unit tests frontend
+
+  - job: BuildBackendApp
+    displayName: Build Backend App
+    steps:
+    - script: echo building backend 
+      displayName: build backend app
+    - script: echo running unit tests for backend app
+      displayName: unit tests backend
 
 
