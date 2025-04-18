@@ -5,58 +5,29 @@ pool:
     vmImage: ubuntu-latest
 
 stages:
-- stage: BuildApp
-  displayName: Build Apps
-  jobs:
-  - job: BuildFrontendApp
-    displayName: Build Frontend App
-    steps:
-    - script: echo building frontend App
-      displayName: build frontend app
-    - script: echo running unit tests for frontend app
-      displayName: unit tests frontend
+    - stage: Test
+      jobs:
+      - job: Test
+        steps:
+            - script: echo testing app
+    
+    - stage: deployUS1 # this stage runs after test
+      jobs:
+      - job: deploy_us1
+        steps:
+            - script: echo deploying to US1
 
-  - job: BuildBackendApp
-    displayName: Build Backend App
-    steps:
-    - script: echo building backend 
-      displayName: build backend app
-    - script: echo running unit tests for backend app
-      displayName: unit tests backend
-
-- stage: DeployDev
-  displayName: Deploy to Dev Environment
-  jobs:
-  - job: DeployFrontEndDev
-    displayName: Deploy to Frontend Dev
-    steps:
-    - script: echo deploying frontend app to Dev
-      displayName: deploy frontend app to DEV
-
-  - job: DeployBackendDev
-    displayName: Deploy Backend to DEV
-    steps:
-    - script: echo deploying backend app to DEV
-      displayName: deploy backend to Dev
-      
-- stage: DeployProd
-  displayName: Deploy to Prod Environment
-  pool:
-    vmImage: 'macOS-13'
-  jobs:
-  - job: DeployFrontEndProd
-    displayName: Deploy Frontend to Prod
-    steps:
-        - script: echo deploying frontend app to Prod
-          displayName: deploy frontend app to Prod
-
-  - job: DeployBackendProd
-    displayName: Deploy Backend to Prod
-    pool: 
-      vmImage: 'windows-2019'
-    steps:
-        - script: echo deploying backend app to Prod
-          displayName: deploy backend app to PROD
+    - stage: deployUS2 # this stage runs after DeployUS1
+      jobs:
+      - job: deploy_us2
+        steps:
+            - script: echo deploying to deployUS2
+    
+    - stage: deployEurope # this stage runs after deployUS2
+      jobs:
+      - job: deploy_europe
+        steps:
+            - script: echo deploying to Europe
 
       
 
