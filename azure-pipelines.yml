@@ -24,4 +24,41 @@ stages:
     - script: echo running unit tests for backend app
       displayName: unit tests backend
 
+- stage: DeployDev
+  displayName: Deploy to Dev Environment
+  jobs:
+  - job: DeployFrontEndDev
+    displayName: Deploy to Frontend Dev
+    steps:
+    - script: echo deploying frontend app to Dev
+      displayName: deploy frontend app to DEV
+
+  - job: DeployBackendDev
+    displayName: Deploy Backend to DEV
+    steps:
+    - script: echo deploying backend app to DEV
+      displayName: deploy backend to Dev
+      
+- stage: DeployProd
+  displayName: Deploy to Prod Environment
+  pool:
+    vmImage: 'macOS-10.14'
+  jobs:
+  - job: DeployFrontEndProd
+    displayName: Deploy Frontend to Prod
+    steps:
+        - script: echo deploying frontend app to Prod
+          displayName: deploy frontend app to Prod
+
+  - job: DeployBackendProd
+    displayName: Deploy Backend to Prod
+    pool: 
+      vmImage: 'vs2019-win2019'
+    steps:
+        - script: echo deploying backend app to Prod
+          displayName: deploy backend app to PROD
+
+      
+
+
 
