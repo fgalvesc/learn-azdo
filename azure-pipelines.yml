@@ -26,8 +26,6 @@ stages:
 
 - stage: DeployDev
   displayName: Deploy to Dev Environment
-  dependsOn: BuildApp
-  condition: succeeded()
   jobs:
   - job: DeployFrontEndDev
     displayName: Deploy to Frontend Dev
@@ -43,8 +41,6 @@ stages:
       
 - stage: DeployProd
   displayName: Deploy to Prod Environment
-  dependsOn: DeployDev
-  condition: succeeded()
   pool:
     vmImage: 'macOS-13'
   jobs:
