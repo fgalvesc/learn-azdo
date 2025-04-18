@@ -26,6 +26,8 @@ stages:
 
 - stage: DeployDev
   displayName: Deploy to Dev Environment
+  dependsOn: BuildApp
+  condition: succeeded()
   jobs:
   - job: DeployFrontEndDev
     displayName: Deploy to Frontend Dev
@@ -41,8 +43,10 @@ stages:
       
 - stage: DeployProd
   displayName: Deploy to Prod Environment
+  dependsOn: DeployDev
+  condition: succeeded()
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'macOS-13'
   jobs:
   - job: DeployFrontEndProd
     displayName: Deploy Frontend to Prod
@@ -53,7 +57,7 @@ stages:
   - job: DeployBackendProd
     displayName: Deploy Backend to Prod
     pool: 
-      vmImage: 'vs2019-win2019'
+      vmImage: 'windows-2019'
     steps:
         - script: echo deploying backend app to Prod
           displayName: deploy backend app to PROD
